@@ -1,5 +1,8 @@
 # react-face-detection
 
+This project is the client side of a fullstack application.
+The server is here: https://github.com/kyleryanaz/face-detection-backend
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
