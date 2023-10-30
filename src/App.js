@@ -9,42 +9,6 @@ import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm'
 import Rank from './components/Rank/Rank'
 import './App.css';
 
-// test image: https://m.media-amazon.com/images/M/MV5BMTQ2MjMwNDA3Nl5BMl5BanBnXkFtZTcwMTA2NDY3NQ@@._V1_.jpg
-
-const returnClarifaiRequestOptions = (imageUrl) => {
-  const PAT = 'PAT';
-  const USER_ID = 'USER_ID';
-  const APP_ID = 'APP_ID';
-  const IMAGE_URL = imageUrl;
-
-  const raw = JSON.stringify({
-    "user_app_id": {
-      "user_id": USER_ID,
-      "app_id": APP_ID
-    },
-    "inputs": [
-      {
-        "data": {
-          "image": {
-            "url": IMAGE_URL
-          }
-        }
-      }
-    ]
-  });
-
-  const requestOptions = {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Authorization': 'Key ' + PAT
-    },
-    body: raw
-  };
-
-  return requestOptions;
-}
-
 const initialState = {
   input: '',
   imageUrl: '',
@@ -102,7 +66,13 @@ class App extends Component {
 
   onButtonSubmit = () => {
     this.setState({ imageUrl: this.state.input })
-    fetch('https://api.clarifai.com/v2/models/face-detection/outputs', returnClarifaiRequestOptions(this.state.input))
+      fetch('http://localhost:3001/imageUrl', {
+        method: 'post',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          input: this.state.input
+        })
+      })
       .then(response => response.json())
       .then(result => {
         if (result) {
